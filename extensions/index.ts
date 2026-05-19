@@ -10,15 +10,13 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { isToolCallEventType } from "@earendil-works/pi-coding-agent";
 import { spawn } from "node:child_process";
 
-const TOKF_BIN = "/home/ap/.cargo/bin/tokf";
-
 /**
  * Call `tokf rewrite <command>` and return the rewritten string.
  * Falls back to original command on any error (never block execution).
  */
 function rewrite(cmd: string): Promise<string> {
   return new Promise((resolve) => {
-    const child = spawn(TOKF_BIN, ["rewrite", cmd], {
+    const child = spawn("tokf", ["rewrite", cmd], {
       timeout: 3_000,
       env: { ...process.env, NO_COLOR: "1" },
     });
