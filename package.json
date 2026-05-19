@@ -3,17 +3,23 @@
   "version": "0.1.0",
   "description": "pi extension that wraps commands through tokf for compressed output.",
   "keywords": [
-    "pi",
     "pi-package",
+    "pi",
     "pi-extension",
-    "tokf",
-    "output-filtering"
+    "tokf"
   ],
   "author": "tintinweb",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/tintinweb/pi-tokf.git"
+  },
+  "homepage": "https://github.com/tintinweb/pi-tokf#readme",
+  "bugs": {
+    "url": "https://github.com/tintinweb/pi-tokf/issues"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
   },
   "pi": {
     "extensions": [
