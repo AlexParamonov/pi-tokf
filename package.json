@@ -1,0 +1,23 @@
+{
+  "name": "@tintinweb/pi-tokf",
+  "version": "0.1.0",
+  "description": "pi extension that wraps commands through tokf for compressed output.",
+  "keywords": [
+    "pi",
+    "pi-package",
+    "pi-extension",
+    "tokf",
+    "output-filtering"
+  ],
+  "author": "tintinweb",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tintinweb/pi-tokf.git"
+  },
+  "pi": {
+    "extensions": [
+      "./extensions/index.ts"
+    ]
+  }
+}
