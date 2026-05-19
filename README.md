@@ -1,4 +1,4 @@
-# @tintinweb/pi-tokf
+# @alexparamonov/pi-tokf
 
 pi extension that wraps commands through [tokf](https://github.com/mpecan/tokf) for compressed output.
 
@@ -8,10 +8,10 @@ Intercepts bash tool calls and rewrites commands via `tokf rewrite` before execu
 
 ```bash
 # npm
-pi install npm:@tintinweb/pi-tokf
+pi install npm:@alexparamonov/pi-tokf
 
 # git
-pi install git:github.com/tintinweb/pi-tokf
+pi install git:github.com/AlexParamonov/pi-tokf
 ```
 
 ## Requirements

@@ -12,11 +12,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tintinweb/pi-tokf.git"
+    "url": "https://github.com/AlexParamonov/pi-tokf.git"
   },
-  "homepage": "https://github.com/tintinweb/pi-tokf#readme",
+  "homepage": "https://github.com/AlexParamonov/pi-tokf#readme",
   "bugs": {
-    "url": "https://github.com/tintinweb/pi-tokf/issues"
+    "url": "https://github.com/AlexParamonov/pi-tokf/issues"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*"
