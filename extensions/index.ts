@@ -2,29 +2,50 @@
  * tokf — intercept bash tool calls and rewrite commands through
  * `tokf run --no-mask-exit-code`.
  *
- * Mirrors tokf's Claude Code hook: pre-execution command rewrite via
- * `tokf rewrite`. Fires globally for main agent and all subagents.
+ * Fires globally for main agent and all subagents.
+ *
+ * Design decision: errors are non-fatal. If tokf is broken or
+ * missing, commands pass through unmodified — the agent session
+ * is never blocked by a failing extension.
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { isToolCallEventType } from "@earendil-works/pi-coding-agent";
 import { spawn } from "node:child_process";
 
+const TOKF_TIMEOUT_MS = 3_000;
+const NO_MASK_EXIT_CODE = "--no-mask-exit-code";
+
+/**
+ * `tokf rewrite` returns commands wrapped in `tokf run …`.
+ * We must inject `--no-mask-exit-code` so tokf propagates the
+ * inner command's exit code — without it, tokf always reports
+ * success and pi would miss real failures.
+ */
+function injectNoMaskExitCode(command: string): string {
+  if (command.includes(NO_MASK_EXIT_CODE)) return command;
+  return command.replaceAll("tokf run ", `tokf run ${NO_MASK_EXIT_CODE} `);
+}
+
 /**
  * Call `tokf rewrite <command>` and return the rewritten string.
- * Falls back to original command on any error (never block execution).
+ * Falls back to the original command on any error — execution
+ * is never blocked by a broken or missing tokf installation.
  */
 function rewrite(cmd: string): Promise<string> {
   return new Promise((resolve) => {
     const child = spawn("tokf", ["rewrite", cmd], {
-      timeout: 3_000,
+      timeout: TOKF_TIMEOUT_MS,
       env: { ...process.env, NO_COLOR: "1" },
     });
     let stdout = "";
     child.stdout.on("data", (d: Buffer) => (stdout += d.toString()));
     child.stderr.on("data", () => {});
     child.on("close", () => resolve(stdout.trim() || cmd));
-    child.on("error", () => resolve(cmd));
+    child.on("error", (err) => {
+      console.error("[pi-tokf] rewrite failed:", err.message);
+      resolve(cmd);
+    });
   });
 }
 
@@ -36,12 +57,7 @@ export default function (pi: ExtensionAPI) {
     const rewritten = await rewrite(original);
 
     if (rewritten !== original) {
-      // tokf rewrite doesn't honour --no-mask-exit-code, inject manually.
-      const final = rewritten.replace(
-        /tokf run (?!--)/g,
-        "tokf run --no-mask-exit-code ",
-      );
-      event.input.command = final;
+      event.input.command = injectNoMaskExitCode(rewritten);
     }
   });
 }
