@@ -14,7 +14,6 @@ import { isToolCallEventType } from "@earendil-works/pi-coding-agent";
 import { spawn } from "node:child_process";
 
 const TOKF_TIMEOUT_MS = 3_000;
-const NO_MASK_EXIT_CODE = "--no-mask-exit-code";
 
 /**
  * `tokf rewrite` returns commands wrapped in `tokf run …`.
@@ -23,8 +22,8 @@ const NO_MASK_EXIT_CODE = "--no-mask-exit-code";
  * success and pi would miss real failures.
  */
 function injectNoMaskExitCode(command: string): string {
-  if (command.includes(NO_MASK_EXIT_CODE)) return command;
-  return command.replaceAll("tokf run ", `tokf run ${NO_MASK_EXIT_CODE} `);
+  if (command.includes("--no-mask-exit-code")) return command;
+  return command.replaceAll("tokf run ", "tokf run --no-mask-exit-code ");
 }
 
 /**
