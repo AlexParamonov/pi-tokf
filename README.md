@@ -3,9 +3,9 @@
 [![npm version](https://img.shields.io/npm/v/@alexparamonov/pi-tokf)](https://www.npmjs.com/package/@alexparamonov/pi-tokf)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[pi](https://pi.dev) extension that wraps commands through [tokf](https://github.com/mpecan/tokf) for compressed output.
+[pi](https://pi.dev) extension that wraps bash commands through [tokf](https://github.com/mpecan/tokf) — reducing LLM context consumption by 60–90%.
 
-Intercepts bash tool calls before execution — main agent and all subagents, zero config.
+Zero config. Main agent and all subagents. Just install and every bash tool call is automatically compressed.
 
 ## How It Works
 
