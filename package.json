@@ -24,6 +24,11 @@
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*"
   },
+  "files": [
+    "extensions/",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
