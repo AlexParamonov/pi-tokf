@@ -10,6 +10,9 @@
   ],
   "author": "AlexParamonov",
   "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/AlexParamonov/pi-tokf.git"
@@ -20,6 +23,9 @@
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
   },
   "pi": {
     "extensions": [

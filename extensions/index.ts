@@ -13,7 +13,10 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { isToolCallEventType } from "@earendil-works/pi-coding-agent";
 import { spawn } from "node:child_process";
 
-const TOKF_TIMEOUT_MS = 3_000;
+const TOKF_REWRITE_TIMEOUT_MS = 3_000;
+
+// Once tokf proves unavailable, skip all further spawns for the session.
+let tokfDead = false;
 
 /**
  * `tokf rewrite` returns commands wrapped in `tokf run …`.
@@ -23,7 +26,7 @@ const TOKF_TIMEOUT_MS = 3_000;
  */
 function injectNoMaskExitCode(command: string): string {
   if (command.includes("--no-mask-exit-code")) return command;
-  return command.replaceAll("tokf run ", "tokf run --no-mask-exit-code ");
+  return command.replace("tokf run ", "tokf run --no-mask-exit-code ");
 }
 
 /**
@@ -32,16 +35,21 @@ function injectNoMaskExitCode(command: string): string {
  * is never blocked by a broken or missing tokf installation.
  */
 function rewrite(cmd: string): Promise<string> {
+  if (tokfDead) return Promise.resolve(cmd);
   return new Promise((resolve) => {
     const child = spawn("tokf", ["rewrite", cmd], {
-      timeout: TOKF_TIMEOUT_MS,
+      timeout: TOKF_REWRITE_TIMEOUT_MS,
       env: { ...process.env, NO_COLOR: "1" },
     });
     let stdout = "";
     child.stdout.on("data", (d: Buffer) => (stdout += d.toString()));
     child.stderr.on("data", () => {});
-    child.on("close", () => resolve(stdout.trim() || cmd));
+    child.on("close", (_code, signal) => {
+      if (signal) console.error(`[pi-tokf] rewrite timed out after ${TOKF_REWRITE_TIMEOUT_MS}ms`);
+      resolve(stdout.trim() || cmd);
+    });
     child.on("error", (err) => {
+      if ((err as NodeJS.ErrnoException).code === "ENOENT") tokfDead = true;
       console.error("[pi-tokf] rewrite failed:", err.message);
       resolve(cmd);
     });
