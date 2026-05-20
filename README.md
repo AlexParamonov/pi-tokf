@@ -1,7 +1,6 @@
 # @alexparamonov/pi-tokf
 
 [![npm version](https://img.shields.io/npm/v/@alexparamonov/pi-tokf)](https://www.npmjs.com/package/@alexparamonov/pi-tokf)
-[![npm downloads](https://img.shields.io/npm/dm/@alexparamonov/pi-tokf)](https://www.npmjs.com/package/@alexparamonov/pi-tokf)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [pi](https://pi.dev) extension that wraps commands through [tokf](https://github.com/mpecan/tokf) for compressed output.
