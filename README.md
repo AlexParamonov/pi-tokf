@@ -1,6 +1,6 @@
-# @alexparamonov/pi-tokf
+# pi-tokf
 
-[![npm version](https://img.shields.io/npm/v/@alexparamonov/pi-tokf)](https://www.npmjs.com/package/@alexparamonov/pi-tokf)
+[![npm version](https://img.shields.io/npm/v/pi-tokf)](https://www.npmjs.com/package/pi-tokf)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [pi](https://pi.dev) extension that wraps bash commands through [tokf](https://github.com/mpecan/tokf) — reducing LLM context consumption by 60–90%.
@@ -37,13 +37,13 @@ Finished in 0.4 seconds
 
 ```bash
 # Global (user settings)
-pi install npm:@alexparamonov/pi-tokf
+pi install npm:pi-tokf
 
 # Project-local (shared via .pi/settings.json)
-pi install -l npm:@alexparamonov/pi-tokf
+pi install -l npm:pi-tokf
 
 # Try without installing (current run only)
-pi -e npm:@alexparamonov/pi-tokf
+pi -e npm:pi-tokf
 
 # From git
 pi install git:github.com/AlexParamonov/pi-tokf

@@ -1,5 +1,5 @@
 {
-  "name": "@alexparamonov/pi-tokf",
+  "name": "pi-tokf",
   "version": "0.1.0",
   "description": "pi extension that wraps commands through tokf for compressed output.",
   "keywords": [
